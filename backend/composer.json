@@ -1,0 +1,12 @@
+{
+    "name": "elysabeth/backend",
+    "authors": [
+        {
+            "name": "Elysabeth Patrigot",
+            "email": "epatrigot@icloud.com"
+        }
+    ],
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^4.0"
+    }
+}
