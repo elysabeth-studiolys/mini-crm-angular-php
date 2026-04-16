@@ -1,0 +1,97 @@
+
+.overlay {
+  position: fixed;
+  inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+
+}
+
+.companies {
+  max-width: 900px;        
+  margin: 2rem auto;       
+   
+  gap: 8px;
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 8px;
+  }
+
+  &__card {
+background: white;       
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 2rem;   
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+  }
+
+  &__form {
+    background: white;       
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 2rem;   
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 80%;
+    z-index: 20;
+
+    &-name {
+        display: flex;
+        flex-direction: row;
+        gap: 8px; 
+        input {
+            flex: 1; 
+        }
+    }
+    &-action {
+      display: flex;
+      gap: 8px;
+    }
+    
+    input {
+    padding: 0.75rem;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius);
+
+    }
+   }
+
+
+  }
+
+  .btn-delete {
+    background: var(--danger);  
+    color: white;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+.company {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    margin-left: 8px;
+
+    lucide-icon {
+      display: flex;
+    }
+}

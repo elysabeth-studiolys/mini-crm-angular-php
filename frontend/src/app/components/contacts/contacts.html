@@ -1,0 +1,57 @@
+<div class="contacts">
+    
+
+    <div class="contacts__header">
+        <h1>Liste des contacts</h1>
+        <button class="btn-add" (click)="showForm = !showForm">
+            <lucide-icon name="CirclePlus" size="16" />
+        </button>
+    </div>
+    <div class="contacts__list">
+        @for (contact of contacts; track contact.id_contact) {
+            <div class="contacts__card">
+                <div>
+                    <h3>{{ contact.first_name }} {{ contact.last_name }}</h3>
+                </div>
+                <div class="contact">
+                    <lucide-icon name="Mail" size="16" />
+                    <span>{{ contact.email }}</span>
+                </div>
+                <div class="contact">
+                    <lucide-icon name="Phone" size="16" />
+                    <span>{{ contact.phone }}</span>
+                </div>
+                <div class="contact">
+                    <lucide-icon name="Info" size="16" />
+                    <span>{{ contact.status }}</span>
+                </div>
+                <lucide-icon name="Trash2" size="16" (click)="contact.id_contact && delete(contact.id_contact)" />
+            </div>
+        }
+        </div>
+
+        
+
+        @if (showForm) {
+            <div class="overlay" (click)="showForm = false">
+                <div class="contacts__form" (click)="$event.stopPropagation()">
+                    <h1>Nouveau contact</h1>
+                <div class="contacts__form-name">
+                    <input [(ngModel)]="newContact.first_name" placeholder="Prénom" />
+                    <input [(ngModel)]="newContact.last_name" placeholder="Nom" />
+                </div>
+                <input [(ngModel)]="newContact.email" placeholder="Email" />
+                <input [(ngModel)]="newContact.phone" placeholder="Téléphone" />
+                <input [(ngModel)]="newContact.status" placeholder="Statut" />
+
+                <div class="contacts__form-action">
+                    <button class="btn-save" (click)="create()" (click)="showForm = false">Ajouter</button>
+                    <button class="btn-cancel" (click)="showForm = false">Annuler</button>
+                </div>
+            </div>
+            </div>
+            
+        }
+
+</div>
+
