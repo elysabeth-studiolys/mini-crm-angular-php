@@ -42,32 +42,53 @@ export class CompaniesComponent implements OnInit {
 
   //FORMULAIRE ADD CONTACT
 
-  showForm = false;
-  newCompany: Company = {
-    name: '',
-    secteur: '',
-    email: '',
-    phone: '',
-    adress: ''
-  };
-
-  create(): void {
-    this.companyService.create(this.newCompany).subscribe({
-      next: () => {
+  
+    showForm = false;
+    editingCompany: Company | null = null;
+    formCompany: Company = {
+      name: '',
+      secteur: '',
+      email: '',
+      phone: '',
+      adress: ''
+    };
+  
+    openEdit(company: Company) : void {
+      this.editingCompany = { ...company };
+      this.formCompany = { ...company };
+      this.showForm = true;
+    }
+  
+  
+    create(): void {
+      this.companyService.create(this.formCompany).subscribe({
+        next: () => {
+          this.companyService.getAll().subscribe(data => {
+            this.companies = data;
+            this.cdr.detectChanges();
+          });
+          this.resetForm();
+        },
+        error: err => console.error('erreur création:', err)
+      });
+    }
+    update(): void {
+      if (!this.editingCompany?.id_company) return;
+      this.companyService.update(this.editingCompany.id_company, this.formCompany).subscribe({
+        next: () => {
         this.companyService.getAll().subscribe(data => {
           this.companies = data;
           this.cdr.detectChanges();
         });
-        this.showForm = false;
-        this.newCompany = {
-          name: '',
-          secteur: '',
-          email: '',
-          phone: '',
-          adress: ''
-        };
-      },
-      error: err => console.error('erreur création:', err)
-    })
-  }
+        this.resetForm();
+        },
+        error: err => console.error('Erreur changement', err)
+      });
+    }
+  
+    resetForm(): void {
+      this.formCompany = { name: '', secteur: '', email: '', phone: '', adress: ''};
+      this.editingCompany = null;
+      this.showForm = false;
+    }
 }

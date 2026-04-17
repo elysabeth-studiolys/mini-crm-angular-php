@@ -40,10 +40,14 @@ export class ContactsComponent implements OnInit {
     })
   }
 
-  //FORMULAIRE ADD CONTACT
+  //FORMULAIRE ADD CONTACT // modifier
+
+  
+  
 
   showForm = false;
-  newContact: Contact = {
+  editingContact: Contact | null = null;
+  formContact: Contact = {
     first_name: '',
     last_name: '',
     email: '',
@@ -51,24 +55,43 @@ export class ContactsComponent implements OnInit {
     status: ''
   };
 
+  openEdit(contact: Contact) : void {
+    this.editingContact = { ...contact };
+    this.formContact = { ...contact };
+    this.showForm = true;
+  }
+
 
   create(): void {
-    this.contactService.create(this.newContact).subscribe({
+    this.contactService.create(this.formContact).subscribe({
       next: () => {
         this.contactService.getAll().subscribe(data => {
           this.contacts = data;
           this.cdr.detectChanges();
         });
-        this.showForm = false;
-        this.newContact = {
-          first_name: '',
-          last_name: '',
-          email: '',
-          phone: '',
-          status: ''
-        };
+        this.resetForm();
       },
       error: err => console.error('erreur création:', err)
-    })
+    });
   }
+  update(): void {
+    if (!this.editingContact?.id_contact) return;
+    this.contactService.update(this.editingContact.id_contact, this.formContact).subscribe({
+      next: () => {
+      this.contactService.getAll().subscribe(data => {
+        this.contacts = data;
+        this.cdr.detectChanges();
+      });
+      this.resetForm();
+      },
+      error: err => console.error('Erreur changement', err)
+    });
+  }
+
+  resetForm(): void {
+    this.formContact = { first_name: '', last_name: '', email: '', phone: '', status: ''};
+    this.editingContact = null;
+    this.showForm = false;
+  }
+
 }

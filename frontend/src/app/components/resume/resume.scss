@@ -1,0 +1,25 @@
+
+.resume {
+    display: flex;
+    flex-direction: column;
+    margin: 2rem auto;       
+    max-width: 900px;  
+    gap: 20px;      
+
+
+
+    &__list{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    text-align: center;
+    
+    }
+    .badge {
+        width: fit-content;
+        font-size: 3rem;
+    }
+    .card {
+        align-items: center;
+    }
+}

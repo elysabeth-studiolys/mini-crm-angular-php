@@ -3,15 +3,19 @@
 
     <div class="contacts__header">
         <h1>Liste des contacts</h1>
-        <button class="btn-add" (click)="showForm = !showForm">
+<button class="btn-add" (click)="showForm = !showForm; editingContact = null; formContact = {first_name: '', last_name: '', email: '', phone: '', status: ''}">
             <lucide-icon name="CirclePlus" size="16" />
         </button>
     </div>
     <div class="contacts__list">
         @for (contact of contacts; track contact.id_contact) {
             <div class="contacts__card">
-                <div>
+                <div class="contacts__title">
                     <h3>{{ contact.first_name }} {{ contact.last_name }}</h3>
+                    <div class="icons">
+                    <lucide-icon name="Pencil" size="16" (click)="openEdit(contact)"  />
+                     <lucide-icon name="Trash2" size="16" (click)="contact.id_contact && delete(contact.id_contact)"style="color: red;" />
+                     </div>
                 </div>
                 <div class="contact">
                     <lucide-icon name="Mail" size="16" />
@@ -25,7 +29,6 @@
                     <lucide-icon name="Info" size="16" />
                     <span>{{ contact.status }}</span>
                 </div>
-                <lucide-icon name="Trash2" size="16" (click)="contact.id_contact && delete(contact.id_contact)" />
             </div>
         }
         </div>
@@ -35,17 +38,27 @@
         @if (showForm) {
             <div class="overlay" (click)="showForm = false">
                 <div class="contacts__form" (click)="$event.stopPropagation()">
-                    <h1>Nouveau contact</h1>
+
+                    @if(editingContact) {
+                    <h1>Modifier le contact</h1>
+                    } @else {
+                        <h1>Nouveau Contact</h1>
+                    }
                 <div class="contacts__form-name">
-                    <input [(ngModel)]="newContact.first_name" placeholder="Prénom" />
-                    <input [(ngModel)]="newContact.last_name" placeholder="Nom" />
+                    <input [(ngModel)]="formContact.first_name" placeholder="Prénom" />
+                    <input [(ngModel)]="formContact.last_name" placeholder="Nom" />
                 </div>
-                <input [(ngModel)]="newContact.email" placeholder="Email" />
-                <input [(ngModel)]="newContact.phone" placeholder="Téléphone" />
-                <input [(ngModel)]="newContact.status" placeholder="Statut" />
+                <input [(ngModel)]="formContact.email" placeholder="Email" />
+                <input [(ngModel)]="formContact.phone" placeholder="Téléphone" />
+                <input [(ngModel)]="formContact.status" placeholder="Statut" />
 
                 <div class="contacts__form-action">
+
+                    @if (editingContact) {
+                        <button class=""btn-save (click)="update()" (click)="showForm = false">Modifier</button>
+                    } @else {
                     <button class="btn-save" (click)="create()" (click)="showForm = false">Ajouter</button>
+                    }
                     <button class="btn-cancel" (click)="showForm = false">Annuler</button>
                 </div>
             </div>

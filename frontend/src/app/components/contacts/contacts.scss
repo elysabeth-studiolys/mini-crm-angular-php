@@ -10,14 +10,23 @@
   z-index: 10;
 
 }
-
+.icons {
+  display: flex;
+  gap: 8px;
+}
 .contacts {
   max-width: 900px;        
   margin: 2rem auto;       
    
-  gap: 8px;
+  gap: 12px;
   display: flex;
   flex-direction: column;
+
+  &__title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
 
   &__header {
     display: flex;
@@ -29,7 +38,7 @@
   &__list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 8px;
+    gap: 20px;
   }
 
   &__card {
@@ -38,7 +47,7 @@ background: white;
   box-shadow: var(--shadow);
   padding: 2rem;   
   display: flex;
-  gap: 8px;
+  gap: 4px;
   flex-direction: column;
   }
 
