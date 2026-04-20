@@ -1,0 +1,57 @@
+.deals {
+
+    display: flex;
+    flex-direction: column;
+    width: 100vh;   
+    padding: 38px;   
+    gap:24px; 
+    
+    &__header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    &__content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__card {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        background: white;       
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 1rem;   
+        gap: 8px;
+
+        .price {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .mount {
+            font-weight: 600;
+            font-size: 1.2;
+            
+        }
+        .status {
+                        background-color: rgb(84, 255, 130, 0.3);
+            padding: 4px 12px;
+            border-radius: 50px;
+
+        }
+    }
+}

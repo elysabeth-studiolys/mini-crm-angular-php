@@ -9,20 +9,16 @@
     </div>
     <div class="deals__list">
         @for (deal of deals; track deal.id_deal) {
+
         <div class="deals__card">
-            <div class="deals__title">
+
+            <div class="deals__content">
                 <h3>{{ deal.name }} </h3>
-                <div class="icons">
-                    <lucide-icon name="Trash2" size="16" (click)="deal.id_deal && delete(deal.id_deal)"
-                        style="color: red;" />
-                </div>
-            </div>
-            <div class="deals">
-                <span>{{ deal.amount }} €</span>
-            </div>
-        
-            <div class="contact">
                 <span>{{ deal.date | date:'dd/MM/yyyy' }}</span>
+            </div>
+            <div class="price">
+                <span class="mount">{{ deal.amount }} €</span>
+                <span class="status"> {{ deal.status }}</span>
             </div>
         </div>
         }
