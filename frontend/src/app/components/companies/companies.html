@@ -1,0 +1,70 @@
+<div class="companies">
+
+
+    <div class="companies__header">
+        <h1>Liste des entreprises</h1>
+        <button class="btn-add"
+            (click)="showForm = !showForm; editingCompany = null; formCompany = {name: '', secteur: '', email: '', phone: '', adress: ''}">
+            <lucide-icon name="CirclePlus" size="16" />
+        </button>
+    </div>
+    <div class="companies__list">
+        @for (company of companies; track company.id_company) {
+        <div class="companies__card">
+            <div class="companies__title">
+                <h3>{{ company.name }} - {{ company.secteur }}</h3>
+                <div class="icons">
+                    <lucide-icon name="Pencil" size="16" (click)="openEdit(company)" />
+                    <lucide-icon name="Trash2" size="16" (click)="company.id_company && delete(company.id_company)"
+                        style="color: red;" />
+                </div>
+            </div>
+            <div class="company">
+                <lucide-icon name="Mail" size="16" />
+                <span>{{ company.email }}</span>
+            </div>
+            <div class="company">
+                <lucide-icon name="Phone" size="16" />
+                <span>{{ company.phone }}</span>
+            </div>
+            <div class="company">
+                <lucide-icon name="Info" size="16" />
+                <span>{{ company.adress }}</span>
+            </div>
+        </div>
+        }
+    </div>
+
+    @if (showForm) {
+    <div class="overlay" (click)="showForm = false">
+        <div class="companies__form" (click)="$event.stopPropagation()">
+
+            @if(editingCompany) {
+            <h1>Modifier l'entreprise</h1>
+            } @else {
+            <h1>Nouveau contact</h1>
+            }
+            <div class="companies__form-name">
+                <input [(ngModel)]="formCompany.name" placeholder="Nom" />
+                <input [(ngModel)]="formCompany.secteur" placeholder="Secteur" />
+            </div>
+            <input [(ngModel)]="formCompany.email" placeholder="Email" />
+            <input [(ngModel)]="formCompany.phone" placeholder="Téléphone" />
+            <input [(ngModel)]="formCompany.adress" placeholder="Adresse" />
+
+            <div class="companies__form-action">
+
+                @if (editingCompany) {
+                <button class="" btn-save (click)="update()" (click)="showForm = false">Modifier</button>
+                } @else {
+                <button class="btn-save" (click)="create()" (click)="showForm = false">Ajouter</button>
+                }
+                <button class="btn-cancel" (click)="showForm = false">Annuler</button>
+            </div>
+        </div>
+    </div>
+
+    }
+
+
+</div>
