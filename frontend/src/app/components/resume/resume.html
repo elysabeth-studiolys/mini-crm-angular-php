@@ -10,12 +10,30 @@
             <h1 class="badge">{{ companies.length }}</h1>
         </div>
         <div class="card">
-            <span>Contacts actifs</span>
-            <h1 class="badge">{{ contacts.length }}</h1>
+            <span>Total facturé</span>
+            <h1 class="badge"> {{ totalDeals }} €</h1>
         </div>
-        <div class="card">
-            <span>Entreprises partenaires</span>
-            <h1 class="badge">{{ companies.length }}</h1>
+    </div>
+    <div class="resume__content">
+        <div class="resume__deals">
+            <div class="deals__list">
+                @for (deal of deals; track deal.id_deal) {
+
+                <div class="deals__card">
+
+                    <div class="deals__content">
+                        <span class="mount">{{ deal.name }} - {{deal.company_name}} </span>
+                        <span class="date">{{ deal.date | date:'dd/MM/yyyy' }}</span>
+                    </div>
+                    <div class="price">
+                        <span class="mount">{{ deal.amount }} €</span>
+                        <span class="status"> {{ deal.status }}</span>
+                    </div>
+                </div>
+                <hr class="divider" />
+
+                }
+            </div>
         </div>
     </div>
 

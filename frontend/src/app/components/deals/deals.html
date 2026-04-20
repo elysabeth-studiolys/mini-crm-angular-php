@@ -7,13 +7,18 @@
             <lucide-icon name="CirclePlus" size="16" />
         </button>
     </div>
+
+    <div class="card">
+        <span>Total facturé</span>
+        <h1 class="badge"> {{ totalAmount }} €</h1>
+    </div>
     <div class="deals__list">
         @for (deal of deals; track deal.id_deal) {
 
         <div class="deals__card">
 
             <div class="deals__content">
-                <h3>{{ deal.name }} </h3>
+                <h3>{{ deal.name }} - {{deal.contact_name}} </h3>
                 <span>{{ deal.date | date:'dd/MM/yyyy' }}</span>
             </div>
             <div class="price">

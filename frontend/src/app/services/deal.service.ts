@@ -7,8 +7,8 @@ export interface Deal {
   name: string;
   amount: number;
 
-  id_contact: number;
-  id_company?: number;
+  contact_name?: string;
+  company_name?: string;
   date?: string;
   status?: string;
 }
@@ -23,6 +23,10 @@ export class DealService {
   getAll(): Observable<Deal[]> {
     return this.http.get<Deal[]>(this.apiUrl);
   }
+
+  getTotalAmount(deals: Deal[]): number {
+  return deals.reduce((sum, deal) => sum + deal.amount, 0);
+}
 
   create(deal: Deal): Observable<any> {
     return this.http.post(this.apiUrl, deal);

@@ -13,10 +13,11 @@ class DealController {
             'id_deal' => $d->getIdDeal(),
             'name' => $d->getName(),
             'amount' => $d->getAmount(),
-            'id_contact' => $d->getIdContact(),
-            'id_¨company' => $d->getIdCompany(),
+            'contact_name' => $d->getContactName(),
+            'company_name' => $d->getCompanyName(),
             'date' => $d->getDate()?->format('Y-m-d'),
             'status' => $d->getStatus(),
+
         ], $data);
         echo json_encode($result);
     }

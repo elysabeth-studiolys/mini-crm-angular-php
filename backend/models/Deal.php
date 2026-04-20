@@ -4,8 +4,12 @@ class Deal
 {
     private int $id_deals;
     private string $name;
+
     private ?int $id_contact = null;
     private ?int $id_company = null;
+
+    private ?string $contact_name = null;
+    private ?string $company_name = null;
     private float $amount;
     private ?DateTime $date = null;
     private string $status;
@@ -32,13 +36,13 @@ class Deal
     {
         return $this->name;
     }
-    public function getIdContact(): ?int
+    public function getContactName(): ?string
     {
-        return $this->id_contact;
+        return $this->contact_name;
     }
-    public function getIdCompany(): ?int
+    public function getCompanyName(): ?string
     {
-        return $this->id_company;
+        return $this->company_name;
     }
     public function getAmount(): float
     {
@@ -62,13 +66,13 @@ class Deal
     {
         $this->name = $name;
     }
-    public function setIdContact(?int $id_contact): void
+    public function setContactName(?string $contact_name): void
     {
-        $this->id_contact = $id_contact;
+        $this->contact_name = $contact_name;
     }
-    public function setIdCompany(?int $id_company): void
+    public function setCompanyName(?string $company_name): void
     {
-        $this->id_company = $id_company;
+        $this->company_name = $company_name;
     }
     public function setAmount(float $amount): void
     {
@@ -86,13 +90,20 @@ class Deal
 
     public static function getAllFromDb(PDO $pdo): array
     {
-        $stmt = $pdo->query("SELECT * FROM deals");
+        $stmt = $pdo->query(<<<SQL
+            SELECT deals.*,
+                CONCAT(contacts.first_name, ' ', contacts.last_name) AS contact_name,
+                companies.name AS company_name
+            FROM deals
+            LEFT JOIN contacts ON deals.id_contact = contacts.id_contact
+            LEFT JOIN companies ON deals.id_company = companies.id_company
+            SQL);
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $deals = [];
 
         foreach ($rows as $row) {
-            $deals[] = new Deal(
+            $deal = new Deal(
                 (int) $row['id_deals'],
                 $row['name'],
                 (float) $row['amount'],
@@ -102,6 +113,12 @@ class Deal
                 $row['id_company'] !== null ? (int) $row['id_company'] : null,
                 $row['date'] !== null ? new DateTime($row['date']) : null,
             );
+            $deal->setContactName($row['contact_name'] ?? null);
+            $deal->setCompanyName($row['company_name'] ?? null);
+
+            $deals[] = $deal;
+
+
         }
         return $deals;
     }
@@ -123,23 +140,23 @@ class Deal
     }
 
     public static function updateInDb(PDO $pdo, int $id, array $data): void
-{
-    $stmt = $pdo->prepare("
+    {
+        $stmt = $pdo->prepare("
         UPDATE deals
         SET name = :name, amount = :amount, status = :status,
             id_company = :id_company, id_contact = :id_contact, date = :date
         WHERE id_deal = :id
     ");
-    $stmt->execute([   
-        ':name'       => $data['name'],
-        ':amount'     => $data['amount'],
-        ':status'     => $data['status'],
-        ':id_contact' => $data['id_contact'],
-        ':id_company' => $data['id_company'] ?? null,
-        ':date'       => $data['date'] ?? null,
-        ':id'         => $id
-    ]);
-}
+        $stmt->execute([
+            ':name' => $data['name'],
+            ':amount' => $data['amount'],
+            ':status' => $data['status'],
+            ':id_contact' => $data['id_contact'],
+            ':id_company' => $data['id_company'] ?? null,
+            ':date' => $data['date'] ?? null,
+            ':id' => $id
+        ]);
+    }
 
     public static function deleteFromDb(PDO $pdo, int $id): void
     {

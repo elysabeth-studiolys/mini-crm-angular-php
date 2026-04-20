@@ -36,7 +36,10 @@ export class DealsComponent implements OnInit {
 
   delete(id: number): void {
     this.dealService.delete(id).subscribe(() => {
-      this.deals = this.deals.filter(d => d.id_contact !== id);
+      this.deals = this.deals.filter(d => d.id_deal !== id);
     })
+  }
+  get totalAmount(): number {
+    return this.deals.reduce((sum, deal) => sum + deal.amount, 0);
   }
 }

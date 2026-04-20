@@ -3,6 +3,7 @@
 require_once 'controllers/ContactController.php';
 require_once 'controllers/CompanyController.php';
 require_once 'controllers/DealsController.php';
+require_once 'controllers/ProjectController.php';
 
 //RECUP HTTP ET URL
 $method = $_SERVER['REQUEST_METHOD'];
@@ -22,6 +23,7 @@ if ($method === 'OPTIONS') {
 $contactController = new ContactController();
 $companyController = new CompanyCollection();
 $dealController = new DealController();
+$projectController = new ProjectController();
 
 //ROUTING
 match (true) {
@@ -39,6 +41,11 @@ match (true) {
     $method === 'POST'      && $uri === '/api/deals'         => $dealController->createDeal(),
     $method === 'PUT'       && preg_match('#^/api/deals/(\d+)$#', $uri, $m) => $dealController->updateDeal((int)$m[1]),
     $method === 'DELETE'    && preg_match('#^/api/deals/(\d+)$#', $uri, $m) => $dealController->deleteDeal((int)$m[1]),
+
+    $method === 'GET'       && $uri === '/api/projects'         => $projectController->showProjects(),
+    $method === 'POST'      && $uri === '/api/projects'            => $projectController->createProject(),
+    $method === 'PUT'       && preg_match('#^/api/projects/(\d+)$#', $uri, $m)  => $projectController->updateinDb((int)$m[1]),
+    $method === 'DELETE'    && preg_match('#^/api/projects/(\d+)$#', $uri, $m)     => $projectController->deleteProject((int)$m[1]),
 
     default => (function () {
         http_response_code(404);
