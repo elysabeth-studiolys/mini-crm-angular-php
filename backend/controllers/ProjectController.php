@@ -17,7 +17,7 @@ class ProjectController {
             'contact_name' => $p->getContactName(),
             'company_name' => $p->getCompanyName(),
             'price' => $p->getPrice(),
-            'date' => $p->getDate()?->format('Y-m-d'),
+            'date' => $p->getDate()?->format('d/m/Y'),
 
         ], $data);
         echo json_encode($result);

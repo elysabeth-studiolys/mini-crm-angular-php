@@ -1,0 +1,21 @@
+<div class="projects">
+<h1>Projets en cours</h1>
+<div class="projects__list">
+    @for (project of projects; track project.id_project) {
+        <div class="card">
+            <div class="projects__head">
+                <h4>{{ project.name}}</h4>
+                <span> {{ project.status }}</span>
+            </div>
+            <div class="projects__infos">
+                <p> {{ project.description }}</p>
+                <span> {{ project. contact_name }} - {{ project.company_name }}</span>
+            </div>
+            <div class="projects__footer">
+                <p> {{ project.date }}</p>
+                <span> {{ project.price }} <span class="price">€</span></span>
+            </div>
+        </div>
+    }
+</div>
+</div>

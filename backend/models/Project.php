@@ -37,16 +37,16 @@ class Project {
     public function getDescription(): string {
         return $this->description;
     }
-    public function getContactName(): string {
+    public function getContactName(): ?string {
         return $this->contact_name;
     }
-    public function getCompanyName(): string {
+    public function getCompanyName(): ?string {
         return $this->company_name;
     }
-    public function getPrice(): float {
+    public function getPrice(): ?float {
         return $this->price;
     }
-    public function getDate(): DateTime {
+    public function getDate(): ?DateTime {
         return $this->date;
     }
 
